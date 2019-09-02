@@ -1,3 +1,10 @@
+# libraries
+import pandas as pd
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
+
+
 class Graph(object):
 
     def __init__(self, graph_dict=None):
@@ -40,6 +47,29 @@ class Graph(object):
             res += str(edge) + " "
         return res
 
+    def __graph_to_arrays(self):
+        graph = {
+            "from": [],
+            "to": [],
+            "values": []
+        }
+
+        for node in self.__graph_dict.keys():
+            for connection in self.__graph_dict[node]:
+                graph['from'].append(connection)
+                graph['to'].append(node)
+                graph['values'].append(5)
+        return graph
+
+    def draw_graph(self):
+        graph = self.__graph_to_arrays()
+        import pdb; pdb.set_trace()
+        df = pd.DataFrame({ 'from': graph['from'], 'to': graph['to'], 'value': graph['values']})
+        G=nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.Graph())
+        # nx.draw(G, with_labels=True, node_color='skyblue', node_size=1500, edge_color=df['value'], width=10.0, edge_cmap=plt.cm.Blues)
+        nx.draw(G, with_labels=True)
+        plt.show()
+
 
 if __name__ == "__main__":
     g = {
@@ -80,3 +110,5 @@ if __name__ == "__main__":
     print(graph.vertices())
     print("Edges of graph:")
     print(graph.edges())
+
+    graph.draw_graph()
