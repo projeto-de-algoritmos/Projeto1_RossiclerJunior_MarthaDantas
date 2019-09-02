@@ -63,7 +63,6 @@ class Graph(object):
 
     def draw_graph(self):
         graph = self.__graph_to_arrays()
-        import pdb; pdb.set_trace()
         df = pd.DataFrame({ 'from': graph['from'], 'to': graph['to'], 'value': graph['values']})
         G=nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.Graph())
         # nx.draw(G, with_labels=True, node_color='skyblue', node_size=1500, edge_color=df['value'], width=10.0, edge_cmap=plt.cm.Blues)
