@@ -47,6 +47,27 @@ class Graph(object):
             res += str(edge) + " "
         return res
 
+    def bfs(self):
+        visited_vertex = []
+        visited_edges = []
+        queue = []
+        for vertex in self.__graph_dict.items():
+            if vertex[0] not in visited_vertex:
+                queue.append(vertex[0])
+                visited_vertex.append(vertex[0])
+                while len(queue) > 0:
+                    u = queue.pop(0)
+                    for v in vertex[1]:
+                        if v not in visited_vertex:
+                            visited_edges.append(v + "-" + u)
+                            visited_vertex.append(v)
+                            queue.append(v)
+        
+        print("BFS(G):")
+        print("Visited vertex: " + str(visited_vertex))
+        print("Visited edges: " + str(visited_edges))
+        return None
+
     def __graph_to_arrays(self):
         graph = {
             "from": [],
@@ -72,7 +93,7 @@ class Graph(object):
 
 if __name__ == "__main__":
     g = {
-        "a": ["d"],
+        "a": ["d", "f", "e"],
         "b": ["c"],
         "c": ["b", "c", "d", "e"],
         "d": ["a", "c"],
@@ -110,4 +131,5 @@ if __name__ == "__main__":
     print("Edges of graph:")
     print(graph.edges())
 
+    graph.bfs()
     graph.draw_graph()
